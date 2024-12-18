@@ -5,7 +5,7 @@ import {AUTH_ROOT_URL, MANAGEMENT_ROOT_URL} from "../const.ts";
 
 export const keycloakIns = new Keycloak({
     url: AUTH_ROOT_URL,
-    realm: "living-circle",
+    realm: "open-dpp",
     clientId: 'frontend',
 });
 
