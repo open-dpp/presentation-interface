@@ -1,0 +1,47 @@
+# Very thanks to https://v2.vuejs.org/v2/cookbook/dockerize-vuejs-app.html?redirect=true#Real-World-Example
+# Stage 1: Build the application
+FROM node:23-alpine AS build-stage
+
+
+ARG VITE_AUTH_ROOT_URL="http://localhost:20000"
+ENV VITE_AUTH_ROOT_URL=$VITE_AUTH_ROOT_URL
+ARG VITE_API_ROOT_URL="http://localhost:20005"
+ENV VITE_API_ROOT_URL=$VITE_API_ROOT_URL
+ARG VITE_MANAGEMENT_ROOT_URL="http://localhost:20004"
+ENV VITE_MANAGEMENT_ROOT_URL=$VITE_MANAGEMENT_ROOT_URL
+
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json (or yarn.lock)
+COPY package*.json ./
+# If you're using Yarn, copy yarn.lock instead
+# COPY yarn.lock ./
+
+# Install dependencies
+RUN npm install
+# If you're using Yarn
+# RUN yarn install
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application
+RUN npm run build
+# If your build script is different, replace 'build' with your script name
+
+# Stage 2: Serve the application with Nginx
+FROM nginx:1.27-alpine AS production-stage
+
+# Copy the build output to Nginx's html directory
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+## Copy custom Nginx configuration if needed
+#COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx when the container launches
+CMD ["nginx", "-g", "daemon off;"]

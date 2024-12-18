@@ -26,7 +26,7 @@ jobs:
 
       - name: Build the docker image
         run: |
-          docker build --build-arg VITE_MANAGEMENT_ROOT_URL=https://admin.cloud.open-dpp.de --build-arg VITE_AUTH_ROOT_URL=https://auth.cloud.open-dpp.de --build-arg VITE_API_ROOT_URL=https://api.cloud.open-dpp.de . -t ghcr.io/${{ github.repository }}:latest -t ghcr.io/${{ github.repository }}:${{ env.sha }}
+          docker build -f Dockerfile-prod --build-arg VITE_MANAGEMENT_ROOT_URL=https://admin.cloud.open-dpp.de --build-arg VITE_AUTH_ROOT_URL=https://auth.cloud.open-dpp.de --build-arg VITE_API_ROOT_URL=https://api.cloud.open-dpp.de . -t ghcr.io/${{ github.repository }}:latest -t ghcr.io/${{ github.repository }}:${{ env.sha }}
 
       - name: Push the docker image
         run: |
