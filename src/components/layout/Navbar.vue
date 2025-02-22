@@ -131,8 +131,6 @@ const user = {
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = computed(() => [
-  {name: 'Alles', select: () => indexStore.view = 'all', current: indexStore.view === 'all'},
-  {name: 'Hersteller', select: () => indexStore.view = 'manufacturer', current: indexStore.view === 'manufacturer'},
   {name: 'Kontrollbehörde', select: () => indexStore.view = 'compliance', current: indexStore.view === 'compliance'},
   {name: 'Endkunde', select: () => indexStore.view = 'client', current: indexStore.view === 'client'},
 ]);

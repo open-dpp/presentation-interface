@@ -3,7 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 // const MODE = import.meta.env.MODE;
 
 export const routes = [
-    {path: '/:permalink', component: () => import('../view/Product.vue')},
+    {path: '/:permalink', component: () => import('../view/View.vue')},
 ]
 
 export const router = createRouter({
