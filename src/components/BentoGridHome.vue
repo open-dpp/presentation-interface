@@ -8,7 +8,7 @@
         <div class="relative lg:col-span-3">
           <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]"/>
           <div
-              class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]">
+              class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)] lg:rounded-tl-[calc(2rem+1px)]">
             <img alt=""
                  class="h-80 object-cover object-left" src="https://tailwindui.com/plus/img/component-images/bento-01-performance.png"/>
             <div class="p-10 pt-4">
@@ -19,12 +19,12 @@
             </div>
           </div>
           <div
-              class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]"/>
+              class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 max-lg:rounded-t-[2rem] lg:rounded-tl-[2rem]"/>
         </div>
         <div class="relative lg:col-span-3">
           <div class="absolute inset-px rounded-lg bg-white lg:rounded-tr-[2rem]"/>
           <div
-              class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
+              class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-tr-[calc(2rem+1px)]">
             <img alt=""
                  class="h-80 object-cover object-left lg:object-right" src="https://tailwindui.com/plus/img/component-images/bento-01-releases.png"/>
             <div class="p-10 pt-4">
@@ -35,12 +35,12 @@
             </div>
           </div>
           <div
-              class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-tr-[2rem]"/>
+              class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 lg:rounded-tr-[2rem]"/>
         </div>
         <div class="relative lg:col-span-2">
           <div class="absolute inset-px rounded-lg bg-white lg:rounded-bl-[2rem]"/>
           <div
-              class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]">
+              class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-bl-[calc(2rem+1px)]">
             <img alt=""
                  class="h-80 object-cover object-left" src="https://tailwindui.com/plus/img/component-images/bento-01-speed.png"/>
             <div class="p-10 pt-4">
@@ -51,11 +51,11 @@
             </div>
           </div>
           <div
-              class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-bl-[2rem]"/>
+              class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 lg:rounded-bl-[2rem]"/>
         </div>
         <div class="relative lg:col-span-2">
           <div class="absolute inset-px rounded-lg bg-white"/>
-          <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+          <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
             <img alt=""
                  class="h-80 object-cover object-center" src="https://tailwindui.com/plus/img/component-images/bento-01-integrations.png"/>
             <div class="p-10 pt-4">
@@ -65,12 +65,12 @@
                 aliquam maximus arcu.</p>
             </div>
           </div>
-          <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5"/>
+          <div class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5"/>
         </div>
         <div class="relative lg:col-span-2">
           <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"/>
           <div
-              class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]">
+              class="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-br-[calc(2rem+1px)]">
             <img alt=""
                  class="h-80 object-cover object-center" src="https://tailwindui.com/plus/img/component-images/bento-01-network.png"/>
             <div class="p-10 pt-4">
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div
-              class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"/>
+              class="pointer-events-none absolute inset-px rounded-lg shadow-sm ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-br-[2rem]"/>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="lg:px-72 pt-10">
-      <div class="bg-white shadow">
+      <div class="bg-white shadow-sm">
         <Navbar/>
 
         <main>

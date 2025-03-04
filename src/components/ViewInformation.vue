@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden bg-white shadow sm:rounded-lg w-full">
+  <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg w-full">
     <div class="px-4 py-6 sm:px-6">
       <h3 class="text-base/7 font-semibold text-gray-900">Produkt Informationen</h3>
       <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Produktdetails</p>
@@ -13,7 +13,7 @@
       </dl>
     </div>
   </div>
-  <div v-if="view" v-for="section of view.sections" class="overflow-hidden bg-white shadow sm:rounded-lg w-full">
+  <div v-if="view" v-for="section of view.sections" class="overflow-hidden bg-white shadow-sm sm:rounded-lg w-full">
     <div class="px-4 py-6 sm:px-6">
       <h3 class="text-base/7 font-semibold text-gray-900">{{section.name}}</h3>
     </div>

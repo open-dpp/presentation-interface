@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center gap-5 p-3">
     <div v-if="indexStore.view !== 'client'" title="Certification" class="flex w-full">
-      <div class="w-full overflow-hidden bg-white shadow sm:rounded-lg p-3">
+      <div class="w-full overflow-hidden bg-white shadow-sm sm:rounded-lg p-3">
         <VerificationHeader/>
       </div>
     </div>
