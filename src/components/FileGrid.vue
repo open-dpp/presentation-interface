@@ -4,7 +4,7 @@
       <div
           class="group aspect-h-5 aspect-w-5 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
         <img :src="file.source" alt="" class="pointer-events-none object-cover group-hover:opacity-75"/>
-        <button class="absolute inset-0 focus:outline-none" type="button">
+        <button class="absolute inset-0 focus:outline-hidden" type="button">
           <span class="sr-only">View details for {{ file.title }}</span>
         </button>
       </div>

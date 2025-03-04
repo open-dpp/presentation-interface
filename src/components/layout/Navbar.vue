@@ -1,9 +1,9 @@
 <template>
-  <Disclosure v-slot="{ open }" as="header" class="bg-white shadow">
+  <Disclosure v-slot="{ open }" as="header" class="bg-white shadow-sm">
     <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
       <div class="relative flex h-16 justify-between">
         <div class="relative z-10 flex px-2 lg:px-0">
-          <div class="flex flex-shrink-0 items-center">
+          <div class="flex shrink-0 items-center">
             <img :src="logo" alt="Your Company"
                  class="h-8 w-auto hover:cursor-pointer" @click="goToApp"/>
           </div>
@@ -25,7 +25,7 @@
         <div class="relative z-10 flex items-center lg:hidden">
           <!-- Mobile menu button -->
           <DisclosureButton
-              class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+              class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-indigo-500">
             <span class="absolute -inset-0.5"/>
             <span class="sr-only">Open menu</span>
             <Bars3Icon v-if="!open" aria-hidden="true" class="block h-6 w-6"/>
@@ -34,7 +34,7 @@
         </div>
         <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
           <button
-              class="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="relative shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               type="button">
             <span class="absolute -inset-1.5"/>
             <span class="sr-only">View notifications</span>
@@ -42,10 +42,10 @@
           </button>
 
           <!-- Profile dropdown -->
-          <Menu as="div" class="relative ml-4 flex-shrink-0">
+          <Menu as="div" class="relative ml-4 shrink-0">
             <div>
               <MenuButton
-                  class="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  class="relative flex rounded-full bg-white focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 <span class="absolute -inset-1.5"/>
                 <span class="sr-only">Open user menu</span>
                 <img :src="user.imageUrl" alt="" class="h-8 w-8 rounded-full"/>
@@ -57,9 +57,9 @@
                         leave-from-class="transform opacity-100 scale-100"
                         leave-to-class="transform opacity-0 scale-95">
               <MenuItems
-                  class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden">
                 <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                  <a :class="[active ? 'bg-gray-100 outline-none' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                  <a :class="[active ? 'bg-gray-100 outline-hidden' : '', 'block px-4 py-2 text-sm text-gray-700']"
                      :href="item.href">{{
                       item.name
                     }}</a>
@@ -87,7 +87,7 @@
       </div>
       <div class="border-t border-gray-200 pb-3 pt-4">
         <div class="flex items-center px-4">
-          <div class="flex-shrink-0">
+          <div class="shrink-0">
             <img :src="user.imageUrl" alt="" class="h-10 w-10 rounded-full"/>
           </div>
           <div class="ml-3">
@@ -95,7 +95,7 @@
             <div class="text-sm font-medium text-gray-500">{{ user.email }}</div>
           </div>
           <button
-              class="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="relative ml-auto shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               type="button">
             <span class="absolute -inset-1.5"/>
             <span class="sr-only">View notifications</span>
