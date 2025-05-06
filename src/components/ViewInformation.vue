@@ -60,7 +60,7 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useViewStore } from "../stores/product.ts";
-import { isRepeaterView, isSectionView } from "../../../open-dpp-api-client";
+import { isRepeaterView, isSectionView } from "@open-dpp/api-client";
 import SectionView from "./SectionView.vue";
 import RowView from "./RowView.vue";
 import { DocumentTextIcon } from "@heroicons/vue/16/solid";
