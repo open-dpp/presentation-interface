@@ -25,7 +25,6 @@ const indexStore = useIndexStore();
 
 onMounted(async () => {
   const response = await apiClient.uniqueProductIdentifiers.getView(String(route.params.permalink));
-  console.log(response.data);
   viewStore.view = response.data;
 });
 </script>
