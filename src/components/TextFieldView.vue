@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <dl>
     <dt class="mb-1 text-sm font-medium text-gray-500">
       {{ props.fieldView.name }}
     </dt>
@@ -11,7 +11,7 @@
     >
       {{ props.fieldView.value }}
     </dd>
-  </div>
+  </dl>
 </template>
 <script setup lang="ts">
 import { generateClassesForLayout } from "../lib/layout.ts";

@@ -18,7 +18,7 @@ const props = defineProps<{ fieldView: FieldViewDto }>();
 
 const router = useRouter();
 
-const onLinkClick = async () => {
-  await router.push(`/${props.fieldView.value}`);
+const onLinkClick = () => {
+  router.push(`/${props.fieldView.value}`);
 };
 </script>
