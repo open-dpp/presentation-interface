@@ -39,7 +39,7 @@
 import logo from "../../assets/logo-with-text.svg";
 import { useIndexStore } from "../../stores";
 import { computed } from "vue";
-import { MANAGEMENT_ROOT_URL } from "../../const.ts";
+import { MANAGEMENT_ROOT_URL } from "../../const";
 
 const indexStore = useIndexStore();
 
