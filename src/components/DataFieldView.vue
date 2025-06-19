@@ -9,6 +9,10 @@
         v-if="props.fieldView.type === DataFieldType.PRODUCT_PASSPORT_LINK"
         :field-view="props.fieldView"
       />
+      <TextFieldView
+          v-if="props.fieldView.type === DataFieldType.NUMERIC_FIELD"
+          :field-view="props.fieldView"
+      />
     </div>
   </div>
 </template>
