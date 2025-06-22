@@ -21,7 +21,6 @@
 
 <script lang="ts" setup>
 import { Disclosure } from '@headlessui/vue'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline'
 
 const backToApp = () => {
   window.location.href = 'https://admin.cloud.open-dpp.de';
