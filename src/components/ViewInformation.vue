@@ -1,7 +1,7 @@
 <template>
   <div class="w-full my-10">
     <div class="flex flex-row gap-10">
-      <div v-if="view?.nodes.length > 1" class="bg-white shadow-sm px-6 py-4 min-w-48 hidden md:flex">
+      <div v-if="view && view.nodes.length > 1" class="bg-white shadow-sm px-6 py-4 min-w-48 hidden md:flex">
         <Sidebar />
       </div>
       <div class="flex flex-col gap-5 w-full">
