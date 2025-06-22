@@ -1,4 +1,4 @@
-const keycloakDisabled = false;
+const keycloakDisabled = true;
 
 export {keycloakDisabled};
 
