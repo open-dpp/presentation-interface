@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { FieldViewDto } from "@open-dpp/api-client";
-import { generateClassesForLayout } from "../lib/layout.ts";
+import { generateClassesForLayout } from "../lib/layout";
 
 const props = defineProps<{ fieldView: FieldViewDto }>();
 </script>
