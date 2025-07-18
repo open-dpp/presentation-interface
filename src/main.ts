@@ -4,12 +4,9 @@ import App from "./App.vue";
 import { router } from "./router";
 import { createPinia } from "pinia";
 import keycloakIns, { initializeKeycloak } from "./lib/keycloak";
-import { keycloakDisabled } from "./const";
-
-const MODE = import.meta.env.MODE;
+import { keycloakDisabled } from "./const.ts";
 
 const pinia = createPinia();
-console.log(MODE);
 
 const startApp = async () => {
   const app = createApp(App).use(pinia);
