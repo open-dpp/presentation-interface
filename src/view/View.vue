@@ -21,7 +21,7 @@ watch(
   async () => {
     const permalink = String(route.params.permalink);
     try {
-      const response = await apiClient.uniqueProductIdentifiers.getView(permalink);
+      const response = await apiClient.dpp.uniqueProductIdentifiers.getView(permalink);
       if (response.status === 404) {
         await router.push({
           path: '404',

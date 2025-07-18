@@ -34,7 +34,7 @@ import {
   SectionViewDto,
 } from "@open-dpp/api-client";
 import { computed } from "vue";
-import { generateClassesForLayout } from "../lib/layout.ts";
+import { generateClassesForLayout } from "../lib/layout";
 
 const props = defineProps<{ rowView: RowViewDto; isLastRow: boolean }>();
 const fieldViews = computed<FieldViewDto[]>(() =>
