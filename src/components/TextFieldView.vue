@@ -14,7 +14,7 @@
   </dl>
 </template>
 <script setup lang="ts">
-import { generateClassesForLayout } from "../lib/layout.ts";
+import { generateClassesForLayout } from "../lib/layout";
 import { FieldViewDto } from "@open-dpp/api-client";
 const props = defineProps<{ fieldView: FieldViewDto }>();
 </script>
