@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {useViewStore} from "../stores/view.ts";
-import {computed} from "vue";
+import { useViewStore } from "../stores/view";
+import { computed } from "vue";
 import QrCode from "./QrCode.vue";
 
 const viewStore = useViewStore();
@@ -9,10 +9,10 @@ const view = computed(() => viewStore.view);
 
 const url = computed(() => {
   const href = window.location.href;
-  if (!href.includes('#')) {
+  if (!href.includes("#")) {
     return href;
   }
-  return href.substring(0, href.lastIndexOf('#'));
+  return href.substring(0, href.lastIndexOf("#"));
 });
 </script>
 
@@ -20,10 +20,10 @@ const url = computed(() => {
   <div class="flex flex-row gap-5">
     <div class="grow bg-white shadow-sm">
       <div class="px-4 py-6 sm:px-6" id="product-details">
-        <h3 class="text-base/7 font-semibold text-gray-900" >
-          Produktdetails
-        </h3>
-        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Allgemeine Informationen zum Produkt.</p>
+        <h3 class="text-base/7 font-semibold text-gray-900">Produktdetails</h3>
+        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">
+          Allgemeine Informationen zum Produkt.
+        </p>
       </div>
       <div v-if="view" class="border-t border-gray-100">
         <dl class="divide-y divide-gray-100">

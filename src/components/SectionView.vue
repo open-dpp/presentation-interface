@@ -26,7 +26,7 @@ import {
   SectionViewDto,
 } from "@open-dpp/api-client";
 import DataFieldView from "./DataFieldView.vue";
-import { generateClassesForLayout } from "../lib/layout.ts";
+import { generateClassesForLayout } from "../lib/layout";
 import { computed } from "vue";
 
 const props = defineProps<{ sectionView: SectionViewDto }>();

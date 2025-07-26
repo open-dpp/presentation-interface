@@ -4,7 +4,7 @@ import App from "./App.vue";
 import { router } from "./router";
 import { createPinia } from "pinia";
 import keycloakIns, { initializeKeycloak } from "./lib/keycloak";
-import { keycloakDisabled } from "./const.ts";
+import { keycloakDisabled } from "./const";
 
 const pinia = createPinia();
 

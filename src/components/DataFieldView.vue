@@ -10,8 +10,8 @@
         :field-view="props.fieldView"
       />
       <NumericFieldView
-          v-if="props.fieldView.type === DataFieldType.NUMERIC_FIELD"
-          :field-view="props.fieldView"
+        v-if="props.fieldView.type === DataFieldType.NUMERIC_FIELD"
+        :field-view="props.fieldView"
       />
     </div>
   </div>
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { DataFieldType, FieldViewDto } from "@open-dpp/api-client";
-import { generateClassesForLayout } from "../lib/layout.ts";
+import { generateClassesForLayout } from "../lib/layout";
 import TextFieldView from "./TextFieldView.vue";
 import ProductPassportLinkView from "./ProductPassportLinkView.vue";
 import NumericFieldView from "./NumericFieldView.vue";

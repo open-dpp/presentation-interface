@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts" setup>
-import {useRoute, useRouter} from "vue-router";
-import {watch} from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { watch } from "vue";
 import ViewInformation from "../components/ViewInformation.vue";
-import {useViewStore} from "../stores/view.ts";
-import apiClient from "../lib/api-client.ts";
+import { useViewStore } from "../stores/view";
+import apiClient from "../lib/api-client";
 
 const route = useRoute();
 const router = useRouter();
@@ -21,23 +21,24 @@ watch(
   async () => {
     const permalink = String(route.params.permalink);
     try {
-      const response = await apiClient.uniqueProductIdentifiers.getView(permalink);
+      const response =
+        await apiClient.dpp.uniqueProductIdentifiers.getView(permalink);
       if (response.status === 404) {
         await router.push({
-          path: '404',
+          path: "404",
           query: {
             permalink: permalink,
-          }
+          },
         });
         return;
       }
       viewStore.view = response.data;
     } catch (e) {
       await router.push({
-        path: '404',
+        path: "404",
         query: {
           permalink: permalink,
-        }
+        },
       });
       return;
     }
