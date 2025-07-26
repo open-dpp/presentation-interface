@@ -15,12 +15,12 @@ const initOptions: KeycloakInitOptions = {
 };
 
 // use the access token from cypress if it exists
-if (!!window.localStorage.getItem("access_token")) {
+if (window.localStorage.getItem("access_token")) {
   initOptions.token = window.localStorage.getItem("access_token") || undefined;
 }
 
 // use the refresh token from cypress if it exists
-if (!!window.localStorage.getItem("refresh_token")) {
+if (window.localStorage.getItem("refresh_token")) {
   initOptions.refreshToken =
     window.localStorage.getItem("refresh_token") || undefined;
 }
