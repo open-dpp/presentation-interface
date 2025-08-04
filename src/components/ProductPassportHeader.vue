@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useViewStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/view";
 import { computed } from "vue";
 import QrCode from "./QrCode.vue";
 
-const viewStore = useViewStore();
+const viewStore = useProductPassportStore();
 
-const view = computed(() => viewStore.view);
+const view = computed(() => viewStore.productPassport);
 
 const url = computed(() => {
   const href = window.location.href;

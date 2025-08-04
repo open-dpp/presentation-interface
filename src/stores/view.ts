@@ -1,9 +1,9 @@
-import {defineStore} from 'pinia'
-import {ref} from "vue";
-import {ViewDto} from "@open-dpp/api-client";
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import { ProductPassportDto } from "@open-dpp/api-client";
 
-export const useViewStore = defineStore('view', () => {
-    const view = ref<ViewDto>();
+export const useProductPassportStore = defineStore("view", () => {
+  const productPassport = ref<ProductPassportDto>();
 
-    return {view}
+  return { productPassport };
 });

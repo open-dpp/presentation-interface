@@ -22,18 +22,18 @@
 </template>
 
 <script lang="ts" setup>
-import { useViewStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/view";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const viewStore = useViewStore();
+const viewStore = useProductPassportStore();
 
-const view = computed(() => viewStore.view);
+const view = computed(() => viewStore.productPassport);
 
 const navigation = computed<Array<{ name: string; hash: string }>>(() => {
   const navItems = [{ name: "Produktdetails", hash: "#product-details" }];
-  view.value?.nodes?.forEach((node) => {
+  view.value?.dataSections?.forEach((node) => {
     navItems.push({
       name: node.name,
       hash: `#${node.name.toLowerCase().replace(/\s/g, "-")}`,

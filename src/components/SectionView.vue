@@ -1,39 +1,21 @@
 <template>
-  <div
-    :class="[
-      'grid items-center gap-1',
-      generateClassesForLayout(props.sectionView.layout),
-    ]"
-  >
-    <DataFieldView
-      v-for="(fieldView, index) in fieldViews"
-      :field-view="fieldView"
-      :key="index"
-    />
-    <SectionView
-      v-for="(subSectionView, index) in subSectionViews"
-      :key="index"
-      :section-view="subSectionView"
-    />
+  <div class="mt-6">
+    <dl class="grid grid-cols-1 sm:grid-cols-2">
+      <DataFieldView
+        v-for="dataField in props.dataSection.dataFields"
+        :field-view="{
+          dataField: dataField,
+          value: props.dataSection.dataValues[rowIndex][dataField.id],
+        }"
+        :key="dataField.id"
+      />
+    </dl>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  FieldViewDto,
-  isDataFieldView,
-  isSectionView,
-  SectionViewDto,
-} from "@open-dpp/api-client";
+import { DataSectionDto } from "@open-dpp/api-client";
 import DataFieldView from "./DataFieldView.vue";
-import { generateClassesForLayout } from "../lib/layout";
-import { computed } from "vue";
 
-const props = defineProps<{ sectionView: SectionViewDto }>();
-const fieldViews = computed<FieldViewDto[]>(() =>
-  props.sectionView.children.filter((c) => isDataFieldView(c)),
-);
-const subSectionViews = computed<SectionViewDto[]>(() =>
-  props.sectionView.children.filter((c) => isSectionView(c)),
-);
+const props = defineProps<{ dataSection: DataSectionDto; rowIndex: number }>();
 </script>

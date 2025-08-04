@@ -1,61 +1,46 @@
 <script setup lang="ts">
-import { DocumentTextIcon } from "@heroicons/vue/16/solid";
-import { isRepeaterView, isSectionView } from "@open-dpp/api-client";
-import SectionView from "./SectionView.vue";
-import RowView from "./RowView.vue";
-import { useViewStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/view";
 import { computed } from "vue";
+import { SectionType } from "@open-dpp/api-client";
+import TableView from "./TableView.vue";
+import SectionView from "./SectionView.vue";
+import { useRoute } from "vue-router";
 
-const viewStore = useViewStore();
+const route = useRoute();
 
-const view = computed(() => viewStore.view);
+// Access query parameters
+const parentSectionId = route.query.parentSectionId;
+const rowIndex = route.query.rowIndex ? Number(route.query.rowIndex) : 0;
+
+const productPassportStore = useProductPassportStore();
+
+const productPassport = computed(() => productPassportStore.productPassport);
 </script>
 
 <template>
   <div
-    v-if="view"
-    v-for="(node, index) in view.nodes"
+    v-if="productPassport"
+    v-for="(dataSection, index) in productPassport.dataSections.filter(
+      (d) => d.parentId === parentSectionId,
+    )"
     :key="index"
     class="overflow-hidden bg-white shadow sm:rounded-lg w-full"
   >
-    <div class="flex flex-col gap-4">
-      <div
-        class="flex justify-between items-center border-b border-gray-900/5 bg-gray-50"
-      >
-        <div class="flex items-center gap-2">
-          <div
-            :class="[
-              'bg-[#6BAD87]',
-              'flex size-16 items-center justify-center',
-            ]"
-          >
-            <component
-              :is="DocumentTextIcon"
-              class="size-6 text-white"
-              aria-hidden="true"
-            />
-          </div>
-          <div class="text-sm/6 font-medium text-gray-900">
-            {{ node.name }}
-          </div>
-        </div>
+    <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4">
+      <div class="px-4 sm:px-0">
+        <h3 class="text-base/7 font-semibold text-gray-900">
+          {{ dataSection.name }}
+        </h3>
       </div>
-    </div>
-    <div v-if="isRepeaterView(node)" class="grid grid-cols-1 p-2">
-      <RowView
-        v-for="(row, index) in node.rows"
-        :key="index"
-        :row-view="row"
-        :is-last-row="index === node.rows.length - 1"
-        :id="`${node.name.toLowerCase().replace(/\s/g, '-')}`"
+      <TableView
+        v-if="dataSection.type === SectionType.REPEATABLE"
+        :data-section="dataSection"
       />
-    </div>
-    <div
-      v-if="isSectionView(node)"
-      class="grid grid-cols-1 p-2"
-      :id="`${node.name.toLowerCase().replace(/\s/g, '-')}`"
-    >
-      <SectionView v-if="isSectionView(node)" :section-view="node" />
+      <SectionView
+        v-if="dataSection.type === SectionType.GROUP"
+        :dataSection="dataSection"
+        :row-index="rowIndex"
+      />
     </div>
   </div>
 </template>
