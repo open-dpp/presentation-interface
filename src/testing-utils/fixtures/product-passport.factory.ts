@@ -52,9 +52,9 @@ export const productPassportFactory = ProductPassportFactory.define(() => {
 });
 
 export class DataSectionFactory extends Factory<DataSectionDto> {
-  private _dataFields: Omit<DataFieldDto, "layout">[] = [];
+  private _dataFields: DataFieldDto[] = [];
   private _dataValues: Record<string, unknown>[] = [];
-  addDataField(dataField: Omit<DataFieldDto, "layout">) {
+  addDataField(dataField: DataFieldDto) {
     this._dataFields.push(dataField);
     return this;
   }
@@ -96,14 +96,12 @@ export const dataSectionFactory = DataSectionFactory.define(() => {
   };
 });
 
-export const dataFieldFactory = Factory.define<Omit<DataFieldDto, "layout">>(
-  () => {
-    const id = uuid4();
-    return {
-      id,
-      name: `field ${id}`,
-      type: DataFieldType.TEXT_FIELD,
-      granularityLevel: GranularityLevel.MODEL,
-    };
-  },
-);
+export const dataFieldFactory = Factory.define<DataFieldDto>(() => {
+  const id = uuid4();
+  return {
+    id,
+    name: `field ${id}`,
+    type: DataFieldType.TEXT_FIELD,
+    granularityLevel: GranularityLevel.MODEL,
+  };
+});
