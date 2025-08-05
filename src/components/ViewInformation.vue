@@ -7,7 +7,7 @@
       >
         <Sidebar />
       </div>
-      <div class="flex flex-col gap-5 w-full">
+      <div data-cy="content" class="flex flex-col gap-5 w-full">
         <ProductPassportHeader />
         <ProductPassportBody />
       </div>
