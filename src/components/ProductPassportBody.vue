@@ -1,27 +1,6 @@
-<script setup lang="ts">
-import { useProductPassportStore } from "../stores/view";
-import { computed } from "vue";
-import { SectionType } from "@open-dpp/api-client";
-import TableView from "./TableView.vue";
-import SectionView from "./SectionView.vue";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
-
-// Access query parameters
-const parentSectionId = route.query.parentSectionId;
-const rowIndex = route.query.rowIndex ? Number(route.query.rowIndex) : 0;
-
-const productPassportStore = useProductPassportStore();
-
-const productPassport = computed(() => productPassportStore.productPassport);
-</script>
-
 <template>
   <div
-    v-for="(dataSection, index) in productPassport?.dataSections.filter(
-      (d) => d.parentId === parentSectionId,
-    )"
+    v-for="(dataSection, index) in dataSectionsToShow"
     :key="index"
     class="overflow-hidden bg-white shadow sm:rounded-lg w-full"
   >
@@ -32,14 +11,54 @@ const productPassport = computed(() => productPassportStore.productPassport);
         </h3>
       </div>
       <TableView
-        v-if="dataSection.type === SectionType.REPEATABLE"
+        v-if="
+          dataSection.type === SectionType.REPEATABLE && sectionId === undefined
+        "
         :data-section="dataSection"
       />
       <SectionView
-        v-if="dataSection.type === SectionType.GROUP"
+        v-if="dataSection.type === SectionType.GROUP || sectionId !== undefined"
         :dataSection="dataSection"
         :row-index="rowIndex"
       />
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useProductPassportStore } from "../stores/view";
+import { ref, watch } from "vue";
+import { SectionType, DataSectionDto } from "@open-dpp/api-client";
+import TableView from "./TableView.vue";
+import SectionView from "./SectionView.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+
+// Access query parameters
+
+const productPassportStore = useProductPassportStore();
+const dataSectionsToShow = ref<DataSectionDto[]>();
+const rowIndex = ref(0);
+const sectionId = ref<string | undefined>(undefined);
+
+watch(
+  [() => route.query.sectionId, () => route.query.row], // The store property to watch
+  ([newSectionId, newRowIndex]) => {
+    sectionId.value = newSectionId ? String(newSectionId) : undefined;
+    rowIndex.value = newRowIndex ? Number(newRowIndex) : 0;
+    if (productPassportStore.productPassport) {
+      dataSectionsToShow.value = sectionId.value
+        ? productPassportStore.productPassport.dataSections.filter(
+            (dataSection) => dataSection.id === sectionId.value,
+          )
+        : productPassportStore.productPassport.dataSections.filter(
+            (dataSection) => dataSection.parentId === undefined,
+          );
+    } else {
+      dataSectionsToShow.value = [];
+    }
+  },
+  { immediate: true },
+);
+</script>

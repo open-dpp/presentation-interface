@@ -7,7 +7,11 @@
       >
         <Sidebar />
       </div>
-      <div data-cy="content" class="flex flex-col gap-5 w-full">
+      <div
+        v-if="productPassport"
+        data-cy="content"
+        class="flex flex-col gap-5 w-full"
+      >
         <ProductPassportHeader />
         <ProductPassportBody />
       </div>

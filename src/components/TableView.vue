@@ -31,8 +31,11 @@
             />
           </td>
           <td class="py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-0">
-            <a href="#" class="text-indigo-600 hover:text-indigo-900"
-              >Mehr Infos</a
+            <router-link
+              class="text-indigo-600 hover:text-indigo-900"
+              :data-cy="`${dataSection.id}_${rowIndex}`"
+              :to="`?sectionId=${dataSection.id}&row=${rowIndex}`"
+              >Mehr Infos</router-link
             >
           </td>
         </tr>

@@ -40,17 +40,18 @@ describe("<View />", () => {
     .addDataSection(dataSection1)
     .addDataSection(dataSection2)
     .build();
-  it("renders sections at root level", () => {
-    const uuid = productPassport.id;
-    cy.intercept("GET", `/product-passports/${uuid}`, {
-      statusCode: 200,
-      body: productPassport, // Mock response
-    }).as("getProductPassport");
+  const uuid = productPassport.id;
+  const apiPath = `/product-passports/${uuid}`;
 
+  it("renders sections at root level and navigates to row 1 entry", () => {
+    cy.intercept("GET", apiPath, {
+      statusCode: 200,
+      body: productPassport,
+    }).as("getProductPassport");
     cy.wrap(router.push(`/${uuid}`));
     cy.mountWithPinia(View, { router });
     cy.wait("@getProductPassport").its("response.statusCode").should("eq", 200);
-
+    cy.spy(router, "push").as("pushSpy");
     cy.get('[data-cy="content"]').within(() => {
       cy.contains(dataSection1.name).should("be.visible");
       cy.contains(dataField1.name).should("be.visible");
@@ -66,16 +67,38 @@ describe("<View />", () => {
       cy.contains("f3 value").should("be.visible");
       cy.contains(dataField4.name).should("not.be.visible");
       cy.get("a").contains("Mehr Infos").should("be.visible");
+      cy.get(`[data-cy="${dataSection2.id}_1"]`).click();
+      cy.get("@pushSpy").should(
+        "have.been.calledWith",
+        `?sectionId=${dataSection2.id}&row=1`,
+      );
+    });
+  });
+
+  it("renders specific row of repeatable section", () => {
+    cy.intercept("GET", apiPath, {
+      statusCode: 200,
+      body: productPassport,
+    }).as("getProductPassport");
+    cy.wrap(router.push(`/${uuid}?sectionId=${dataSection2.id}&row=1`));
+    cy.mountWithPinia(View, { router });
+    cy.wait("@getProductPassport").its("response.statusCode").should("eq", 200);
+
+    cy.get('[data-cy="content"]').within(() => {
+      cy.contains(dataSection1.name).should("not.exist");
+      cy.contains(dataSection2.name).should("be.visible");
+      cy.contains(dataField3.name).should("be.visible");
+      cy.contains("f3 value").should("be.visible");
+      cy.contains(dataField4.name).should("be.visible");
+      cy.contains("f4 value").should("be.visible");
     });
   });
 
   it("renders repeatable section for large displays", () => {
-    const uuid = productPassport.id;
-    cy.intercept("GET", `/product-passports/${uuid}`, {
+    cy.intercept("GET", apiPath, {
       statusCode: 200,
-      body: productPassport, // Mock response
+      body: productPassport,
     }).as("getProductPassport");
-
     cy.wrap(router.push(`/${uuid}`));
     cy.mountWithPinia(View, { router });
     cy.viewport(1920, 1080);
