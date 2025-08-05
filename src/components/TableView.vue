@@ -6,6 +6,7 @@
           <th
             v-for="(field, index) in props.dataSection.dataFields"
             scope="col"
+            :key="index"
             :class="[generateHeaderClasses(index)]"
           >
             {{ field.name }}

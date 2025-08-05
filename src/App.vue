@@ -1,6 +1,6 @@
 <template>
   <SafelistTailwindCss key="safelist" />
-  <Layout key="layout"/>
+  <Layout key="layout" />
 </template>
 <script lang="ts" setup>
 import Layout from "./components/layout/Layout.vue";

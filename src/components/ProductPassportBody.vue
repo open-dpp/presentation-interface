@@ -19,8 +19,7 @@ const productPassport = computed(() => productPassportStore.productPassport);
 
 <template>
   <div
-    v-if="productPassport"
-    v-for="(dataSection, index) in productPassport.dataSections.filter(
+    v-for="(dataSection, index) in productPassport?.dataSections.filter(
       (d) => d.parentId === parentSectionId,
     )"
     :key="index"
