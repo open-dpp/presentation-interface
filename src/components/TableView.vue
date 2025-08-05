@@ -34,7 +34,7 @@
             <router-link
               class="text-indigo-600 hover:text-indigo-900"
               :data-cy="`${dataSection.id}_${rowIndex}`"
-              :to="`?sectionId=${dataSection.id}&row=${rowIndex}`"
+              :to="`?sectionId=${dataSection.id}&row=${rowIndex}&parentSectionId=${dataSection.id}`"
               >Mehr Infos</router-link
             >
           </td>

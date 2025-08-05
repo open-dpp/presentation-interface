@@ -8,7 +8,7 @@
 import { useRoute, useRouter } from "vue-router";
 import { watch } from "vue";
 import ViewInformation from "../components/ViewInformation.vue";
-import { useProductPassportStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/product-passport";
 import apiClient from "../lib/api-client";
 
 const route = useRoute();

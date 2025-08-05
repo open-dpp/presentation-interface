@@ -36,9 +36,35 @@ describe("<View />", () => {
     .addDataValue(dataField4.id, "f4 value, row 1", 1)
     .build({ type: SectionType.REPEATABLE });
 
+  const dataField5 = dataFieldFactory.build();
+  const dataField6 = dataFieldFactory.build();
+
+  const dataSection3 = dataSectionFactory
+    .addDataField(dataField5)
+    .addDataField(dataField6)
+    .addDataValue(dataField5.id, "f5 value")
+    .addDataValue(dataField6.id, "f6 value")
+    .addDataValue(dataField5.id, "f5 value, row 1", 1)
+    .addDataValue(dataField6.id, "f6 value, row 1", 1)
+    .build();
+
+  const dataField7 = dataFieldFactory.build();
+  const dataField8 = dataFieldFactory.build();
+
+  const dataSection4 = dataSectionFactory
+    .addDataField(dataField7)
+    .addDataField(dataField8)
+    .addDataValue(dataField7.id, "f7 value")
+    .addDataValue(dataField8.id, "f8 value")
+    .addDataValue(dataField7.id, "f7 value, row 1", 1)
+    .addDataValue(dataField8.id, "f8 value, row 1", 1)
+    .build();
+
   const productPassport = productPassportFactory
     .addDataSection(dataSection1)
     .addDataSection(dataSection2)
+    .addDataSection(dataSection3, dataSection2.id)
+    .addDataSection(dataSection4, dataSection1.id)
     .build();
   const uuid = productPassport.id;
   const apiPath = `/product-passports/${uuid}`;
@@ -70,7 +96,27 @@ describe("<View />", () => {
       cy.get(`[data-cy="${dataSection2.id}_1"]`).click();
       cy.get("@pushSpy").should(
         "have.been.calledWith",
-        `?sectionId=${dataSection2.id}&row=1`,
+        `?sectionId=${dataSection2.id}&row=1&parentSectionId=${dataSection2.id}`,
+      );
+    });
+  });
+
+  it("renders sub sections and navigates to one of them", () => {
+    cy.intercept("GET", apiPath, {
+      statusCode: 200,
+      body: productPassport,
+    }).as("getProductPassport");
+    cy.wrap(router.push(`/${uuid}`));
+    cy.mountWithPinia(View, { router });
+    cy.wait("@getProductPassport").its("response.statusCode").should("eq", 200);
+    cy.spy(router, "push").as("pushSpy");
+    cy.get('[data-cy="content"]').within(() => {
+      cy.contains(dataSection4.name).should("be.visible");
+      cy.contains(dataField5.name).should("not.exist");
+      cy.get(`[data-cy="${dataSection4.id}"]`).click();
+      cy.get("@pushSpy").should(
+        "have.been.calledWith",
+        `?sectionId=${dataSection4.id}&row=0&parentSectionId=${dataSection1.id}`,
       );
     });
   });

@@ -5,5 +5,11 @@ import { ProductPassportDto } from "@open-dpp/api-client";
 export const useProductPassportStore = defineStore("view", () => {
   const productPassport = ref<ProductPassportDto>();
 
-  return { productPassport };
+  const findSubSections = (sectionId: string) => {
+    return productPassport.value?.dataSections.filter(
+      (s) => s.parentId === sectionId,
+    );
+  };
+
+  return { productPassport, findSubSections };
 });

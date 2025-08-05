@@ -12,7 +12,14 @@ import { BuildOptions } from "fishery/dist/types";
 
 export class ProductPassportFactory extends Factory<ProductPassportDto> {
   private _dataSections: DataSectionDto[] = [];
-  addDataSection(dataSection: DataSectionDto) {
+  addDataSection(dataSection: DataSectionDto, parentSectionId?: string) {
+    if (parentSectionId) {
+      const parentSection = this._dataSections.find(
+        (d) => d.id === parentSectionId,
+      )!;
+      parentSection.subSections.push(dataSection.id);
+      dataSection = { ...dataSection, parentId: parentSection.id };
+    }
     this._dataSections.push(dataSection);
     return this;
   }

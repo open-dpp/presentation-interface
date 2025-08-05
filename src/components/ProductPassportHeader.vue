@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useProductPassportStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/product-passport";
 import { computed } from "vue";
 import QrCode from "./QrCode.vue";
 

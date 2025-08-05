@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProductPassportStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/product-passport";
 import { ref, watch } from "vue";
 import { SectionType, DataSectionDto } from "@open-dpp/api-client";
 import TableView from "./TableView.vue";

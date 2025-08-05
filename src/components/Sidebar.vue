@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useProductPassportStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/product-passport";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 
