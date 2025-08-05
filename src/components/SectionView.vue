@@ -11,6 +11,7 @@
       />
     </dl>
     <dl
+      v-if="subSections && subSections.length > 0"
       class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 border-t border-gray-100"
     >
       <dt class="text-sm/6 font-medium text-gray-900">
@@ -23,9 +24,7 @@
         >
           <li
             class="flex items-center justify-between py-4 pr-5 pl-4 text-sm/6"
-            v-for="subSection in productPassportStore.findSubSections(
-              dataSection.id,
-            )"
+            v-for="subSection in subSections"
             :key="subSection.id"
           >
             <div class="flex w-0 flex-1 items-center">
@@ -59,6 +58,7 @@ import { DataSectionDto } from "@open-dpp/api-client";
 import DataFieldView from "./DataFieldView.vue";
 import { FolderIcon } from "@heroicons/vue/16/solid";
 import { useProductPassportStore } from "../stores/product-passport";
+import { computed } from "vue";
 
 const props = defineProps<{
   dataSection: DataSectionDto;
@@ -66,4 +66,7 @@ const props = defineProps<{
 }>();
 
 const productPassportStore = useProductPassportStore();
+const subSections = computed(() =>
+  productPassportStore.findSubSections(props.dataSection.id),
+);
 </script>
