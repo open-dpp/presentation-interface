@@ -4,12 +4,12 @@
       <thead>
         <tr>
           <th
-            v-for="(field, index) in props.dataSection.dataFields"
+            v-for="(name, index) in headers"
             scope="col"
             :key="index"
             :class="[generateHeaderClasses(index)]"
           >
-            {{ field.name }}
+            {{ name }}
           </th>
         </tr>
       </thead>
@@ -30,6 +30,23 @@
               }"
             />
           </td>
+          <td
+            v-if="subSections && subSections.length > 0"
+            :class="[
+              generateCellClasses(Object.entries(dataValuesOfRow).length),
+            ]"
+          >
+            <div class="grid grid-cols-2 gap-1">
+              <button
+                v-for="subSection in subSections"
+                @click="onSubSectionClick(subSection.id, rowIndex)"
+                :key="subSection.id"
+                class="cursor-pointer p-1 block rounded-md text-center font-semibold shadow-xs focus-visible:outline focus-visible:outline-offset-2 bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-600 text-white"
+              >
+                {{ subSection.name }}
+              </button>
+            </div>
+          </td>
           <td class="py-4 pr-4 pl-3 text-right text-sm font-medium sm:pr-0">
             <router-link
               class="text-indigo-600 hover:text-indigo-900"
@@ -46,8 +63,29 @@
 <script setup lang="ts">
 import { DataSectionDto } from "@open-dpp/api-client";
 import DataValue from "./DataValue.vue";
+import { computed } from "vue";
+import { useProductPassportStore } from "../stores/product-passport";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const props = defineProps<{ dataSection: DataSectionDto }>();
+const productPassportStore = useProductPassportStore();
+const subSections = computed(() =>
+  productPassportStore.findSubSections(props.dataSection.id),
+);
+const headers = computed(() => {
+  const headers = props.dataSection.dataFields.map((d) => d.name);
+  if (subSections.value && subSections.value.length > 0) {
+    headers.push("Weiterführende Abschnitte");
+  }
+  return headers;
+});
+
+const onSubSectionClick = async (subSectionId: string, rowIndex: number) => {
+  await router.push(
+    `?sectionId=${subSectionId}&row=${rowIndex}&parentSectionId=${props.dataSection.id}`,
+  );
+};
 
 const generateHeaderClasses = (index: number) => {
   return index === 0
