@@ -11,5 +11,9 @@ export const useProductPassportStore = defineStore("view", () => {
     );
   };
 
-  return { productPassport, findSubSections };
+  const findSection = (sectionId: string) => {
+    return productPassport.value?.dataSections.find((s) => s.id === sectionId);
+  };
+
+  return { productPassport, findSubSections, findSection };
 });

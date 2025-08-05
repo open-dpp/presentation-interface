@@ -5,16 +5,31 @@
   >
     <div class="font-bold py-3 text-xl">Navigation</div>
     <ul role="list" class="-mx-2 space-y-1 pt-2">
-      <li v-for="item in navigation" :key="item.name">
-        <a
-          :href="item.hash"
+      <li v-if="section" key="back">
+        <router-link
+          :to="
+            section.parentId
+              ? `?sectionId=${section.parentId}&row=${rowIndex}&parentSectionId=${section.parentId}`
+              : ''
+          "
           :class="[
-            isActive(item.hash)
-              ? 'bg-gray-50 text-indigo-600'
-              : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+            'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
             'group flex gap-x-3 rounded-md p-2 pl-3 text-sm/6 font-semibold',
           ]"
-          >{{ item.name }}</a
+          >Zurück</router-link
+        >
+      </li>
+      <li
+        v-for="dataSectionToShow in dataSectionsToShow"
+        :key="dataSectionToShow.id"
+      >
+        <router-link
+          :to="`?sectionId=${dataSectionToShow.id}&row=${rowIndex}&parentSectionId=${dataSectionToShow.parentId}`"
+          :class="[
+            'text-gray-700 hover:bg-gray-50 hover:text-indigo-600',
+            'group flex gap-x-3 rounded-md p-2 pl-3 text-sm/6 font-semibold',
+          ]"
+          >{{ dataSectionToShow.name }}</router-link
         >
       </li>
     </ul>
@@ -23,26 +38,33 @@
 
 <script lang="ts" setup>
 import { useProductPassportStore } from "../stores/product-passport";
-import { computed } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { DataSectionDto } from "@open-dpp/api-client";
 
-const router = useRouter();
-const viewStore = useProductPassportStore();
+const route = useRoute();
 
-const view = computed(() => viewStore.productPassport);
+// Access query parameters
 
-const navigation = computed<Array<{ name: string; hash: string }>>(() => {
-  const navItems = [{ name: "Produktdetails", hash: "#product-details" }];
-  view.value?.dataSections?.forEach((node) => {
-    navItems.push({
-      name: node.name,
-      hash: `#${node.name.toLowerCase().replace(/\s/g, "-")}`,
-    });
-  });
-  return navItems;
-});
+const productPassportStore = useProductPassportStore();
+const dataSectionsToShow = ref<DataSectionDto[]>();
+const rowIndex = ref(0);
+const section = ref<DataSectionDto | undefined>(undefined);
 
-const isActive = (hash: string) => {
-  return router.currentRoute.value.hash === hash;
-};
+watch(
+  [() => route.query.sectionId, () => route.query.row], // The store property to watch
+  ([newSectionId, newRowIndex]) => {
+    section.value = newSectionId
+      ? productPassportStore.findSection(String(newSectionId))
+      : undefined;
+    rowIndex.value = newRowIndex ? Number(newRowIndex) : 0;
+
+    dataSectionsToShow.value = productPassportStore.productPassport
+      ? productPassportStore.productPassport.dataSections.filter(
+          (dataSection) => dataSection.parentId === section.value?.id,
+        )
+      : [];
+  },
+  { immediate: true },
+);
 </script>

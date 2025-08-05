@@ -1,7 +1,7 @@
 import { createMemoryHistory, createRouter } from "vue-router";
 import { routes } from "../router";
 import View from "./View.vue";
-import { SectionType } from "@open-dpp/api-client";
+import { SectionType, DataFieldType } from "@open-dpp/api-client";
 import {
   dataFieldFactory,
   dataSectionFactory,
@@ -15,7 +15,9 @@ const router = createRouter({
 
 describe("<View />", () => {
   const dataField1 = dataFieldFactory.build();
-  const dataField2 = dataFieldFactory.build();
+  const dataField2 = dataFieldFactory.build({
+    type: DataFieldType.PRODUCT_PASSPORT_LINK,
+  });
   const dataSection1 = dataSectionFactory
     .addDataField(dataField1)
     .addDataField(dataField2)
@@ -79,11 +81,13 @@ describe("<View />", () => {
     cy.wait("@getProductPassport").its("response.statusCode").should("eq", 200);
     cy.spy(router, "push").as("pushSpy");
     cy.get('[data-cy="content"]').within(() => {
+      cy.contains(productPassport.name).should("be.visible");
+      cy.contains(productPassport.id).should("be.visible");
       cy.contains(dataSection1.name).should("be.visible");
       cy.contains(dataField1.name).should("be.visible");
       cy.contains("f1 value").should("be.visible");
       cy.contains(dataField2.name).should("be.visible");
-      cy.contains("f2 value").should("be.visible");
+      cy.contains("Aufrufen").should("be.visible");
 
       cy.contains("f1 value, row 1").should("not.exist");
       cy.contains("f2 value, row 1").should("not.exist");
@@ -117,6 +121,27 @@ describe("<View />", () => {
       cy.get("@pushSpy").should(
         "have.been.calledWith",
         `?sectionId=${dataSection4.id}&row=0&parentSectionId=${dataSection1.id}`,
+      );
+    });
+  });
+
+  it("renders sub sections in table and navigates to one of them", () => {
+    cy.intercept("GET", apiPath, {
+      statusCode: 200,
+      body: productPassport,
+    }).as("getProductPassport");
+    cy.viewport(1920, 1080);
+
+    cy.wrap(router.push(`/${uuid}`));
+    cy.mountWithPinia(View, { router });
+    cy.wait("@getProductPassport").its("response.statusCode").should("eq", 200);
+    cy.spy(router, "push").as("pushSpy");
+    cy.get('[data-cy="content"]').within(() => {
+      cy.contains(dataSection3.name).should("be.visible");
+      cy.get(`[data-cy="${dataSection3.id}_1"]`).click();
+      cy.get("@pushSpy").should(
+        "have.been.calledWith",
+        `?sectionId=${dataSection3.id}&row=1&parentSectionId=${dataSection2.id}`,
       );
     });
   });
@@ -157,6 +182,41 @@ describe("<View />", () => {
       cy.contains(dataField4.name).should("be.visible");
       cy.contains("f4 value").should("be.visible");
       cy.get("a").contains("Mehr Infos").should("be.visible");
+    });
+  });
+
+  it("renders sidebar for root level and navigate to section and back", () => {
+    cy.intercept("GET", apiPath, {
+      statusCode: 200,
+      body: productPassport,
+    }).as("getProductPassport");
+    cy.wrap(router.push(`/${uuid}`));
+    cy.mountWithPinia(View, { router });
+    cy.viewport(1920, 1080);
+    cy.wait("@getProductPassport").its("response.statusCode").should("eq", 200);
+    cy.spy(router, "push").as("pushSpy");
+    cy.get('[data-cy="sidebar"]').within(() => {
+      cy.contains(dataSection1.name).should("be.visible");
+      cy.contains(dataSection2.name).should("be.visible");
+      cy.contains(dataSection3.name).should("not.exist");
+      cy.contains(dataSection4.name).should("not.exist");
+      cy.get("a").contains(dataSection1.name).click();
+      cy.get("@pushSpy")
+        .should(
+          "have.been.calledWith",
+          `?sectionId=${dataSection1.id}&row=0&parentSectionId=${undefined}`,
+        )
+        .then(() => {
+          cy.contains(dataSection1.name).should("not.exist");
+          cy.contains(dataSection2.name).should("not.exist");
+          cy.contains(dataSection3.name).should("not.exist");
+          cy.contains(dataSection4.name).should("be.visible");
+          cy.get("a").contains("Zurück").click();
+          cy.get("@pushSpy").should(
+            "have.been.calledWith",
+            `?sectionId=${dataSection1.id}&row=0&parentSectionId=${undefined}`,
+          );
+        });
     });
   });
 });

@@ -38,6 +38,7 @@
           >
             <div class="grid grid-cols-2 gap-1">
               <button
+                :data-cy="`${subSection.id}_${rowIndex}`"
                 v-for="subSection in subSections"
                 @click="onSubSectionClick(subSection.id, rowIndex)"
                 :key="subSection.id"

@@ -5,11 +5,11 @@
         v-if="productPassport && productPassport.dataSections.length > 1"
         class="bg-white shadow-sm px-6 py-4 min-w-48 hidden md:flex"
       >
-        <Sidebar />
+        <Sidebar data-cy="sidebar" />
       </div>
       <div
-        v-if="productPassport"
         data-cy="content"
+        v-if="productPassport"
         class="flex flex-col gap-5 w-full"
       >
         <ProductPassportHeader />
