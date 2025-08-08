@@ -18,11 +18,12 @@ describe("<View />", () => {
   const dataField2 = dataFieldFactory.build({
     type: DataFieldType.PRODUCT_PASSPORT_LINK,
   });
+  const otherProductPassportUuid = "other-product-passport-uuid";
   const dataSection1 = dataSectionFactory
     .addDataField(dataField1)
     .addDataField(dataField2)
     .addDataValue(dataField1.id, "f1 value")
-    .addDataValue(dataField2.id, "f2 value")
+    .addDataValue(dataField2.id, otherProductPassportUuid)
     .addDataValue(dataField1.id, "f1 value, row 1", 1)
     .addDataValue(dataField2.id, "f2 value, row 1", 1)
     .build();
@@ -68,6 +69,19 @@ describe("<View />", () => {
     .addDataSection(dataSection3, dataSection2.id)
     .addDataSection(dataSection4, dataSection1.id)
     .build();
+
+  const dataField1OtherPassport = dataFieldFactory.build();
+  const dataSection1OtherPassport = dataSectionFactory
+    .addDataField(dataField1OtherPassport)
+    .addDataValue(dataField1OtherPassport.id, "f1 other value")
+    .build();
+
+  const otherProductPassport = productPassportFactory
+    .addDataSection(dataSection1OtherPassport)
+    .build({
+      id: otherProductPassportUuid,
+    });
+
   const uuid = productPassport.id;
   const apiPath = `/product-passports/${uuid}`;
 
@@ -165,11 +179,15 @@ describe("<View />", () => {
     });
   });
 
-  it("renders repeatable section for large displays", () => {
+  it("renders repeatable section for large displays and navigates to other passport", () => {
     cy.intercept("GET", apiPath, {
       statusCode: 200,
       body: productPassport,
     }).as("getProductPassport");
+    cy.intercept("GET", `/product-passports/${otherProductPassport.id}`, {
+      statusCode: 200,
+      body: otherProductPassport,
+    }).as("getOtherProductPassport");
     cy.wrap(router.push(`/${uuid}`));
     cy.mountWithPinia(View, { router });
     cy.viewport(1920, 1080);
@@ -182,6 +200,16 @@ describe("<View />", () => {
       cy.contains(dataField4.name).should("be.visible");
       cy.contains("f4 value").should("be.visible");
       cy.get("a").contains("Mehr Infos").should("be.visible");
+      // navigates to other product passport
+      const dataField2View = cy.get(`[data-cy="${dataField2.id}"]`);
+      dataField2View.within(() => {
+        cy.contains("Aufrufen").click();
+      });
+      cy.wait("@getOtherProductPassport")
+        .its("response.statusCode")
+        .should("eq", 200);
+      cy.contains(dataSection1OtherPassport.name).should("be.visible");
+      cy.contains("f1 other value").should("be.visible");
     });
   });
 

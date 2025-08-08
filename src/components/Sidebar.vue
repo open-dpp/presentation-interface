@@ -52,7 +52,11 @@ const rowIndex = ref(0);
 const section = ref<DataSectionDto | undefined>(undefined);
 
 watch(
-  [() => route.query.sectionId, () => route.query.row], // The store property to watch
+  [
+    () => route.query.sectionId,
+    () => route.query.row,
+    () => productPassportStore.productPassport?.id,
+  ], // The store property to watch
   ([newSectionId, newRowIndex]) => {
     section.value = newSectionId
       ? productPassportStore.findSection(String(newSectionId))
