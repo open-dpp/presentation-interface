@@ -2,12 +2,16 @@
   <div class="w-full my-10">
     <div class="flex flex-row gap-10">
       <div
-        v-if="view && view.nodes.length > 1"
+        v-if="productPassport && productPassport.dataSections.length > 1"
         class="bg-white shadow-sm px-6 py-4 min-w-48 hidden md:flex"
       >
-        <Sidebar />
+        <Sidebar data-cy="sidebar" />
       </div>
-      <div class="flex flex-col gap-5 w-full">
+      <div
+        data-cy="content"
+        v-if="productPassport"
+        class="flex flex-col gap-5 w-full"
+      >
         <ProductPassportHeader />
         <ProductPassportBody />
       </div>
@@ -19,10 +23,10 @@
 import Sidebar from "./Sidebar.vue";
 import ProductPassportHeader from "./ProductPassportHeader.vue";
 import ProductPassportBody from "./ProductPassportBody.vue";
-import { useViewStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/product-passport";
 import { computed } from "vue";
 
-const viewStore = useViewStore();
+const productPassportStore = useProductPassportStore();
 
-const view = computed(() => viewStore.view);
+const productPassport = computed(() => productPassportStore.productPassport);
 </script>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useViewStore } from "../stores/view";
+import { useProductPassportStore } from "../stores/product-passport";
 import { computed } from "vue";
 import QrCode from "./QrCode.vue";
 
-const viewStore = useViewStore();
+const productPassportStore = useProductPassportStore();
 
-const view = computed(() => viewStore.view);
+const productPassport = computed(() => productPassportStore.productPassport);
 
 const url = computed(() => {
   const href = window.location.href;
@@ -25,12 +25,16 @@ const url = computed(() => {
           Allgemeine Informationen zum Produkt.
         </p>
       </div>
-      <div v-if="view" class="border-t border-gray-100">
+      <div v-if="productPassport" class="border-t border-gray-100">
         <dl class="divide-y divide-gray-100">
           <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-900">Identifikation</dt>
+            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {{ productPassport.id }}
+            </dd>
             <dt class="text-sm font-medium text-gray-900">Name</dt>
             <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {{ view.name }}
+              {{ productPassport.name }}
             </dd>
           </div>
         </dl>

@@ -1,23 +1,23 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 // const MODE = import.meta.env.MODE;
 
 export const routes: Array<RouteRecordRaw> = [
-    {
-        path: '/404',
-        component: () => import('../view/404.vue')
-    },
-    {
-        path: '/:permalink',
-        component: () => import('../view/View.vue')
-    },
-    {
-        path: '/:pathMatch(.*)*',
-        component: () => import('../view/404.vue')
-    },
-]
+  {
+    path: "/404",
+    component: () => import("../view/404.vue"),
+  },
+  {
+    path: "/:permalink",
+    component: () => import("../view/View.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("../view/404.vue"),
+  },
+];
 
 export const router = createRouter({
-    history: createWebHistory(),
-    routes,
+  history: createWebHistory(),
+  routes,
 });

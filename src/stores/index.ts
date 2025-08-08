@@ -1,8 +1,8 @@
-import {defineStore} from 'pinia'
-import {ref} from "vue";
+import { defineStore } from "pinia";
+import { ref } from "vue";
 
-export const useIndexStore = defineStore('index', () => {
-    const view = ref<'all' | 'manufacturer' | 'compliance' | 'client'>('client');
+export const useIndexStore = defineStore("index", () => {
+  const view = ref<"all" | "manufacturer" | "compliance" | "client">("client");
 
-    return {view}
+  return { view };
 });

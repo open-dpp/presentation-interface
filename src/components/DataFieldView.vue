@@ -1,28 +1,17 @@
 <template>
-  <div :class="[generateClassesForLayout(props.fieldView.layout), 'p-4']">
-    <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
-      <TextFieldView
-        v-if="props.fieldView.type === DataFieldType.TEXT_FIELD"
-        :field-view="props.fieldView"
-      />
-      <ProductPassportLinkView
-        v-if="props.fieldView.type === DataFieldType.PRODUCT_PASSPORT_LINK"
-        :field-view="props.fieldView"
-      />
-      <NumericFieldView
-        v-if="props.fieldView.type === DataFieldType.NUMERIC_FIELD"
-        :field-view="props.fieldView"
-      />
-    </div>
+  <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+    <dt class="text-sm/6 font-medium text-gray-900">
+      {{ props.fieldView.dataField.name }}
+    </dt>
+    <dd class="mt-1 text-sm/6 text-gray-700 sm:mt-2">
+      <DataValue :field-view="props.fieldView" />
+    </dd>
   </div>
 </template>
 
 <script setup lang="ts">
-import { DataFieldType, FieldViewDto } from "@open-dpp/api-client";
-import { generateClassesForLayout } from "../lib/layout";
-import TextFieldView from "./TextFieldView.vue";
-import ProductPassportLinkView from "./ProductPassportLinkView.vue";
-import NumericFieldView from "./NumericFieldView.vue";
+import { FieldView } from "../lib/field-view";
+import DataValue from "./DataValue.vue";
 
-const props = defineProps<{ fieldView: FieldViewDto }>();
+const props = defineProps<{ fieldView: FieldView }>();
 </script>

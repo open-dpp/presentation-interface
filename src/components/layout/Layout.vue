@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="xl:max-w-7xl pt-10 mx-auto">
-      <div class="flex flex-col gap-5 ">
+      <div class="flex flex-col gap-5">
         <div class="bg-white shadow-sm">
           <Navbar />
         </div>
