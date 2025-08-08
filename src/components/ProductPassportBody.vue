@@ -43,7 +43,11 @@ const rowIndex = ref(0);
 const sectionId = ref<string | undefined>(undefined);
 
 watch(
-  [() => route.query.sectionId, () => route.query.row], // The store property to watch
+  [
+    () => route.query.sectionId,
+    () => route.query.row,
+    () => productPassportStore.productPassport?.id,
+  ], // The store property to watch
   ([newSectionId, newRowIndex]) => {
     sectionId.value = newSectionId ? String(newSectionId) : undefined;
     rowIndex.value = newRowIndex ? Number(newRowIndex) : 0;

@@ -1,5 +1,8 @@
 <template>
-  <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+  <div
+    :data-cy="props.fieldView.dataField.id"
+    class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0"
+  >
     <dt class="text-sm/6 font-medium text-gray-900">
       {{ props.fieldView.dataField.name }}
     </dt>
