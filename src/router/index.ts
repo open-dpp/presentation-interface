@@ -15,6 +15,10 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/:pathMatch(.*)*",
     component: () => import("../view/404.vue"),
   },
+  {
+    path: "/chat",
+    component: () => import("../view/Chat.vue"),
+  },
 ];
 
 export const router = createRouter({
