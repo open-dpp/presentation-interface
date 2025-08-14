@@ -1,6 +1,7 @@
 import Keycloak, { KeycloakInitOptions } from "keycloak-js";
 import apiClient from "./api-client";
 import { AUTH_ROOT_URL, MANAGEMENT_ROOT_URL } from "../const";
+import { setAxiosAuthHeader } from "./axios";
 
 export const keycloakIns = new Keycloak({
   url: AUTH_ROOT_URL,
@@ -29,6 +30,7 @@ export const initializeKeycloak = async (keycloak: Keycloak) => {
   await keycloak.init(initOptions);
 
   if (keycloak.authenticated && keycloak.token && keycloak.tokenParsed) {
+    setAxiosAuthHeader(keycloak.token);
     apiClient.setApiKey(keycloak.token);
     // const usedForm = keycloak.tokenParsed?.used_form;
     //keycloakIns.loadUserProfile();
@@ -44,6 +46,7 @@ export const initializeKeycloak = async (keycloak: Keycloak) => {
 export const updateKeycloakToken = async (keycloak: Keycloak) => {
   const isRefreshed = await keycloak.updateToken(70);
   if (isRefreshed && keycloak.token) {
+    setAxiosAuthHeader(keycloak.token);
     apiClient.setApiKey(keycloak.token);
   }
 };

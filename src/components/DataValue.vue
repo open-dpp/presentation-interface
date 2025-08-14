@@ -5,6 +5,10 @@
     "
     :field-view="props.fieldView"
   />
+  <DataFieldFileValue
+    v-if="props.fieldView.dataField.type === DataFieldType.FILE_FIELD"
+    :field-view="props.fieldView"
+  />
   <span v-else>{{ props.fieldView.value }}</span>
 </template>
 
@@ -12,6 +16,7 @@
 import { FieldView } from "../lib/field-view";
 import { DataFieldType } from "@open-dpp/api-client";
 import LinkValue from "./LinkValue.vue";
+import DataFieldFileValue from "./DataFieldFileValue.vue";
 
 const props = defineProps<{ fieldView: FieldView }>();
 </script>
