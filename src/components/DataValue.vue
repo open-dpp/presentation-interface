@@ -6,7 +6,7 @@
     :field-view="props.fieldView"
   />
   <DataFieldFileValue
-    v-if="props.fieldView.dataField.type === DataFieldType.FILE_FIELD"
+    v-else-if="props.fieldView.dataField.type === DataFieldType.FILE_FIELD"
     :field-view="props.fieldView"
   />
   <span v-else>{{ props.fieldView.value }}</span>
