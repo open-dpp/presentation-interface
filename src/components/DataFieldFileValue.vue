@@ -26,12 +26,12 @@
 <script setup lang="ts">
 import { FieldView } from "../lib/field-view";
 import { onMounted, ref } from "vue";
-import { MEDIA_SERVICE_URL } from "../const";
-import axiosIns from "../lib/axios";
 import { useProductPassportStore } from "../stores/product-passport";
 import { DocumentIcon } from "@heroicons/vue/24/outline";
+import {useMediaStore} from "../stores/media";
 
 const passportStore = useProductPassportStore();
+const mediaStore = useMediaStore();
 
 const props = defineProps<{ fieldView: FieldView }>();
 
@@ -44,19 +44,10 @@ const loadFile = async () => {
   }
 
   try {
-    const responseInfo = await axiosIns.get(
-      `${MEDIA_SERVICE_URL}/media/dpp/${passportStore.productPassport.id}/${props.fieldView.dataField.id}/info`,
+    const { blob, contentType } = await mediaStore.fetchDppMedia(
+        passportStore.productPassport.id,
+        props.fieldView.dataField.id,
     );
-
-    const responseDownload = await axiosIns.get(
-      `${MEDIA_SERVICE_URL}/media/dpp/${passportStore.productPassport.id}/${props.fieldView.dataField.id}/download`,
-      {
-        responseType: "blob",
-      },
-    );
-
-    const blob = responseDownload.data as Blob;
-    const contentType = (responseInfo.data as { mimeType?: string }).mimeType;
 
     // Revoke an old object URL to avoid memory leaks before assigning a new one
     if (uploadedFileUrl.value) {
