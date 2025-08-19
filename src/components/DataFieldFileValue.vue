@@ -39,13 +39,17 @@ const uploadedFileUrl = ref<string | undefined>(undefined);
 const uploadedFileContentType = ref<string | undefined>(undefined);
 
 const loadFile = async () => {
+  if (!passportStore.productPassport?.id) {
+    return;
+  }
+
   try {
     const responseInfo = await axiosIns.get(
-      `${MEDIA_SERVICE_URL}/media/dpp/${passportStore.productPassport?.id}/${props.fieldView.dataField.id}/info`,
+      `${MEDIA_SERVICE_URL}/media/dpp/${passportStore.productPassport.id}/${props.fieldView.dataField.id}/info`,
     );
 
     const responseDownload = await axiosIns.get(
-      `${MEDIA_SERVICE_URL}/media/dpp/${passportStore.productPassport?.id}/${props.fieldView.dataField.id}/download`,
+      `${MEDIA_SERVICE_URL}/media/dpp/${passportStore.productPassport.id}/${props.fieldView.dataField.id}/download`,
       {
         responseType: "blob",
       },
