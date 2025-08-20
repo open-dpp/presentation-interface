@@ -12,11 +12,7 @@ axiosIns.interceptors.response.use(
   },
   function (error) {
     // const authStore = useAuthStore();
-    if (
-      error.response &&
-      error.response.status === 401 &&
-      error.message === "Unauthorized"
-    ) {
+    if (error.response?.status === 401) {
       logout();
     }
     return Promise.reject(error);
