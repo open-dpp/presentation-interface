@@ -14,30 +14,24 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button
+          <BaseButton
             v-if="!aiChatOpened"
-            type="button"
+            variant="primary"
             @click="navigateToAiChat"
-            class="rounded-md bg-indigo-600 p-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             <ChatBubbleOvalLeftEllipsisIcon class="size-5 mr-2 inline-block" />
             Mit KI chatten
-          </button>
-          <button
+          </BaseButton>
+          <BaseButton
+            variant="primary"
             v-if="aiChatOpened"
-            type="button"
             @click="navigateToPassportView"
-            class="rounded-md bg-indigo-600 p-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Zur Passansicht
-          </button>
-          <button
-            type="button"
-            class="hidden md:flex rounded-md bg-[#A2C7AB] p-3 text-black hover:cursor-pointer text-sm"
-            @click="backToApp"
-          >
+          </BaseButton>
+          <BaseButton class="hidden md:flex" @click="backToApp">
             <span>Zurück zur App</span>
-          </button>
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -49,6 +43,7 @@ import { Disclosure } from "@headlessui/vue";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/vue/16/solid";
 import { useRoute, useRouter } from "vue-router";
 import { ref } from "vue";
+import BaseButton from "../BaseButton.vue";
 const route = useRoute();
 const router = useRouter();
 const aiChatOpened = ref<boolean>(false);

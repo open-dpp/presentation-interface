@@ -36,17 +36,15 @@
         v-model="input"
         rows="2"
         name="question"
-        @keydown.enter.prevent="sendMessage"
+        @keydown.enter.exact.prevent="sendMessage"
+        @keydown.shift.enter.exact.prevent="input += '\n'"
         id="question"
         class="flex-1 overflow-hidden rounded-lg pb-12 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500"
         placeholder="Stellen Sie Ihre Frage..."
       />
-      <button
-        @click="sendMessage"
-        class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 dark:bg-white/10 dark:text-white dark:shadow-none dark:inset-ring-white/5 dark:hover:bg-white/20"
-      >
+      <BaseButton variant="primary" @click="sendMessage">
         Abschicken
-      </button>
+      </BaseButton>
     </div>
   </div>
 </template>
@@ -58,6 +56,7 @@ import {
   UserCircleIcon,
 } from "@heroicons/vue/16/solid";
 import { Sender, useAiAgentStore } from "../stores/ai-agent";
+import BaseButton from "../components/BaseButton.vue";
 
 const aiAgentStore = useAiAgentStore();
 
