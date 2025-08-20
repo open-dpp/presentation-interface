@@ -36,6 +36,7 @@
         v-model="input"
         rows="2"
         name="question"
+        @keydown.enter.prevent="sendMessage"
         id="question"
         class="flex-1 overflow-hidden rounded-lg pb-12 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline-white/10 dark:focus-within:outline-indigo-500"
         placeholder="Stellen Sie Ihre Frage..."

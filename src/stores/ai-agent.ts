@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { io, type Socket } from "socket.io-client";
 import { ref } from "vue";
 import { AI_AGENT_URL } from "../const";
+import { useRoute } from "vue-router";
 
 export enum Sender {
   Bot = "Bot",
@@ -11,17 +12,22 @@ export enum Sender {
 export const useAiAgentStore = defineStore("socket", () => {
   const socket = ref<Socket | null>();
   const messages = ref<{ id: number; sender: Sender; text: string }[]>([]);
-
+  const route = useRoute();
   const connect = () => {
-    socket.value = io(AI_AGENT_URL);
-    socket.value.on("botMessage", (msg: string) => {
-      messages.value.push({ id: Date.now(), sender: Sender.Bot, text: msg });
-    });
+    if (!socket.value?.connected) {
+      socket.value = io(AI_AGENT_URL);
+      socket.value.on("botMessage", (msg: string) => {
+        messages.value.push({ id: Date.now(), sender: Sender.Bot, text: msg });
+      });
+    }
   };
 
   const sendMessage = (msg: string) => {
     if (socket.value) {
-      socket.value.emit("userMessage", msg);
+      socket.value.emit("userMessage", {
+        msg,
+        passportUUID: route.params.permalink,
+      });
       messages.value.push({
         id: Date.now(),
         sender: Sender.User,
