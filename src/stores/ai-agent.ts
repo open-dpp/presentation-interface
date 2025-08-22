@@ -9,15 +9,35 @@ export enum Sender {
   User = "User",
 }
 
+export enum MsgStatus {
+  Success = "Success",
+  Error = "Error",
+}
+
 export const useAiAgentStore = defineStore("socket", () => {
   const socket = ref<Socket | null>();
-  const messages = ref<{ id: number; sender: Sender; text: string }[]>([]);
+  const messages = ref<
+    { id: number; sender: Sender; text: string; status: MsgStatus }[]
+  >([]);
   const route = useRoute();
   const connect = () => {
     if (!socket.value?.connected) {
       socket.value = io(AI_AGENT_URL);
       socket.value.on("botMessage", (msg: string) => {
-        messages.value.push({ id: Date.now(), sender: Sender.Bot, text: msg });
+        messages.value.push({
+          id: Date.now(),
+          sender: Sender.Bot,
+          text: msg,
+          status: MsgStatus.Success,
+        });
+      });
+      socket.value.on("errorMessage", () => {
+        messages.value.push({
+          id: Date.now(),
+          sender: Sender.Bot,
+          text: `Es ist ein Fehler aufgetreten`,
+          status: MsgStatus.Error,
+        });
       });
     }
   };
@@ -32,6 +52,7 @@ export const useAiAgentStore = defineStore("socket", () => {
         id: Date.now(),
         sender: Sender.User,
         text: msg,
+        status: MsgStatus.Success,
       });
     }
   };

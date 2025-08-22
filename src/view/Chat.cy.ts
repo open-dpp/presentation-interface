@@ -1,7 +1,7 @@
 import { createMemoryHistory, createRouter } from "vue-router";
 import { routes } from "../router";
 import Chat from "./Chat.vue";
-import { Sender, useAiAgentStore } from "../stores/ai-agent";
+import { MsgStatus, Sender, useAiAgentStore } from "../stores/ai-agent";
 
 const router = createRouter({
   history: createMemoryHistory(),
@@ -18,6 +18,7 @@ describe("<Chat />", () => {
         id: 1,
         text: "Hello from ai agent",
         sender: Sender.Bot,
+        status: MsgStatus.Success,
       });
     });
     cy.spy(aiAgentStore, "sendMessage").as("sendMessage");

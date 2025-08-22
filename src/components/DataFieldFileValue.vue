@@ -28,7 +28,7 @@ import { FieldView } from "../lib/field-view";
 import { onMounted, ref } from "vue";
 import { useProductPassportStore } from "../stores/product-passport";
 import { DocumentIcon } from "@heroicons/vue/24/outline";
-import {useMediaStore} from "../stores/media";
+import { useMediaStore } from "../stores/media";
 
 const passportStore = useProductPassportStore();
 const mediaStore = useMediaStore();
@@ -45,8 +45,8 @@ const loadFile = async () => {
 
   try {
     const { blob, contentType } = await mediaStore.fetchDppMedia(
-        passportStore.productPassport.id,
-        props.fieldView.dataField.id,
+      passportStore.productPassport.id,
+      props.fieldView.dataField.id,
     );
 
     // Revoke an old object URL to avoid memory leaks before assigning a new one
