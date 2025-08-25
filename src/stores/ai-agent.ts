@@ -31,11 +31,16 @@ export const useAiAgentStore = defineStore("socket", () => {
           status: MsgStatus.Success,
         });
       });
-      socket.value.on("errorMessage", () => {
+      socket.value.on("errorMessage", (msg: string) => {
+        console.error(msg);
+        const text =
+          msg === "AI is not enabled"
+            ? "Die KI Funktion ist für diesen Produktpass nicht aktiviert"
+            : `Es ist ein Fehler aufgetreten`;
         messages.value.push({
           id: Date.now(),
           sender: Sender.Bot,
-          text: `Es ist ein Fehler aufgetreten`,
+          text,
           status: MsgStatus.Error,
         });
       });
