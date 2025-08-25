@@ -32,7 +32,6 @@ export const useAiAgentStore = defineStore("socket", () => {
         });
       });
       socket.value.on("errorMessage", (msg: string) => {
-        console.error(msg);
         const text =
           msg === "AI is not enabled"
             ? "Die KI Funktion ist für diesen Produktpass nicht aktiviert"
