@@ -12,6 +12,10 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import("../view/View.vue"),
   },
   {
+    path: "/:permalink/chat",
+    component: () => import("../view/Chat.vue"),
+  },
+  {
     path: "/:pathMatch(.*)*",
     component: () => import("../view/404.vue"),
   },
