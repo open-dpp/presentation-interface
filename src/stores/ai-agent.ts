@@ -15,14 +15,27 @@ export enum MsgStatus {
 }
 
 export const useAiAgentStore = defineStore("socket", () => {
-  const socket = ref<Socket | null>();
+  const socket = ref<Socket | null>(null);
   const messages = ref<
     { id: number; sender: Sender; text: string; status: MsgStatus }[]
   >([]);
   const route = useRoute();
+
+  let listenersBound = false;
   const connect = () => {
-    if (!socket.value?.connected) {
-      socket.value = io(AGENT_SERVER_URL);
+    if (!AGENT_SERVER_URL) {
+      console.error("AGENT_SERVER_URL is not set");
+      return;
+    }
+    if (!socket.value) {
+      socket.value = io(AGENT_SERVER_URL, { autoConnect: true });
+    } else if (!socket.value.connected) {
+      socket.value.connect();
+    } else {
+      // already connected
+      return;
+    }
+    if (!listenersBound && socket.value) {
       socket.value.on("botMessage", (msg: string) => {
         messages.value.push({
           id: Date.now(),
@@ -43,6 +56,11 @@ export const useAiAgentStore = defineStore("socket", () => {
           status: MsgStatus.Error,
         });
       });
+      // surface connection errors to the console; optional: push a message
+      socket.value.on("connect_error", (err) => {
+        console.error("AI agent socket connect_error:", err.message);
+      });
+      listenersBound = true;
     }
   };
 

@@ -15,18 +15,14 @@
         </div>
         <div class="flex items-center gap-2">
           <BaseButton
-            v-if="!aiChatOpened"
+            v-if="!isChatRoute"
             variant="primary"
             @click="navigateToAiChat"
           >
             <ChatBubbleOvalLeftEllipsisIcon class="size-5 mr-2 inline-block" />
             Mit KI chatten
           </BaseButton>
-          <BaseButton
-            variant="primary"
-            v-if="aiChatOpened"
-            @click="navigateToPassportView"
-          >
+          <BaseButton variant="primary" v-else @click="navigateToPassportView">
             Zur Passansicht
           </BaseButton>
           <BaseButton class="hidden md:flex" @click="backToApp">
@@ -42,20 +38,20 @@
 import { Disclosure } from "@headlessui/vue";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/vue/16/solid";
 import { useRoute, useRouter } from "vue-router";
-import { ref } from "vue";
+import { computed } from "vue";
 import BaseButton from "../BaseButton.vue";
+
 const route = useRoute();
 const router = useRouter();
-const aiChatOpened = ref<boolean>(false);
+const permalink = computed(() => String(route.params.permalink ?? ""));
+const isChatRoute = computed(() => route.path.endsWith("/chat"));
 
 const navigateToPassportView = () => {
-  router.push(`/${route.params.permalink}`);
-  aiChatOpened.value = false;
+  router.push(`/${permalink.value}`);
 };
 
 const navigateToAiChat = () => {
-  router.push(`/${route.params.permalink}/chat`);
-  aiChatOpened.value = true;
+  router.push(`/${permalink.value}/chat`);
 };
 
 const backToApp = () => {

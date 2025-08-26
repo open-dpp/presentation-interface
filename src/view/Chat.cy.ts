@@ -23,7 +23,8 @@ describe("<Chat />", () => {
     });
     cy.spy(aiAgentStore, "sendMessage").as("sendMessage");
 
-    cy.wrap(router.push(`/chat`));
+    const permalinkId = "1234567890";
+    cy.wrap(router.push(`/${permalinkId}/chat`));
     cy.mountWithPinia(Chat, { router });
     cy.contains("Hello from ai agent").should("exist");
     cy.get("#question").type("Wie viel CO2 steckt in dem Produkt?");
