@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { io, type Socket } from "socket.io-client";
 import { ref } from "vue";
-import { AI_AGENT_URL } from "../const";
+import { AGENT_SERVER_URL } from "../const";
 import { useRoute } from "vue-router";
 
 export enum Sender {
@@ -22,7 +22,7 @@ export const useAiAgentStore = defineStore("socket", () => {
   const route = useRoute();
   const connect = () => {
     if (!socket.value?.connected) {
-      socket.value = io(AI_AGENT_URL);
+      socket.value = io(AGENT_SERVER_URL);
       socket.value.on("botMessage", (msg: string) => {
         messages.value.push({
           id: Date.now(),
