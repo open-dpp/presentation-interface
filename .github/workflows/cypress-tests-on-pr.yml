@@ -76,6 +76,7 @@ jobs:
           VITE_AUTH_ROOT_URL: "http://localhost"
           VITE_API_ROOT_URL: "http://localhost"
           VITE_MANAGEMENT_ROOT_URL: "http://localhost"
+          VITE_AGENT_SERVER_ROOT: "http://localhost"
 
       # Step 5: Upload Cypress artifacts (optional)
       - name: Upload Cypress Artifacts
