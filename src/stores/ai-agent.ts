@@ -28,7 +28,10 @@ export const useAiAgentStore = defineStore("socket", () => {
       return;
     }
     if (!socket.value) {
-      socket.value = io(AGENT_SERVER_URL, { autoConnect: true });
+      socket.value = io(AGENT_SERVER_URL, {
+        autoConnect: true,
+        path: "/ai-socket/socket.io",
+      });
     } else if (!socket.value.connected) {
       socket.value.connect();
     } else {
