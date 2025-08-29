@@ -29,7 +29,7 @@ jobs:
 
       - name: Build the docker image
         run: |
-          docker build -f Dockerfile-prod --build-arg VITE_MANAGEMENT_ROOT_URL=https://admin.cloud.open-dpp.de --build-arg VITE_AUTH_ROOT_URL=https://auth.cloud.open-dpp.de --build-arg VITE_API_ROOT_URL=https://api.cloud.open-dpp.de --build-arg VITE_AGENT_SERVER_ROOT=http://agent-server:3000 --build-arg VITE_MEDIA_SERVICE_ROOT=https://media.cloud.open-dpp.de . -t ghcr.io/${{ github.repository }}:latest -t ghcr.io/${{ github.repository }}:${{ env.sha }}
+          docker build -f Dockerfile-prod --build-arg VITE_MANAGEMENT_ROOT_URL=https://admin.cloud.open-dpp.de --build-arg VITE_AUTH_ROOT_URL=https://auth.cloud.open-dpp.de --build-arg VITE_API_ROOT_URL=https://api.cloud.open-dpp.de --build-arg VITE_AGENT_SERVER_ROOT=https://agent-server.cloud.open-dpp.de --build-arg VITE_MEDIA_SERVICE_ROOT=https://media.cloud.open-dpp.de . -t ghcr.io/${{ github.repository }}:latest -t ghcr.io/${{ github.repository }}:${{ env.sha }}
 
       - name: Push the docker image
         run: |
